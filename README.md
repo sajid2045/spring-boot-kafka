@@ -1,5 +1,8 @@
 All Kafka props
 # APACHE KAFKA (KafkaProperties)
+
+```
+
 spring.kafka.admin.client-id= # ID to pass to the server when making requests. Used for server-side logging.
 spring.kafka.admin.fail-fast=false # Whether to fail fast if the broker is not available on startup.
 spring.kafka.admin.properties.*= # Additional admin-specific properties used to configure the client.
@@ -95,4 +98,5 @@ spring.kafka.streams.ssl.trust-store-type= # Type of the trust store.
 spring.kafka.streams.state-dir= # Directory location for the state store.
 spring.kafka.template.default-topic= # Default topic to which messages are sent.
 
+```
 
