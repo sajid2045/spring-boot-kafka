@@ -23,8 +23,9 @@ public class ConsumerNewSub {
     public void newSub(String message) throws IOException {
 
         logger.info(String.format( ">>>> NEW SUB: %s", message));
-        logger.info(String.format( ">>>> NEW SUB: %s", kafkaListenerContainerFactory.getClass()));
+//        logger.info(String.format( ">>>> NEW SUB: %s", kafkaListenerContainerFactory.getClass()));
         sleep();
+        logger.info("<<<< Processing Finished for : " + message);
 
     }
 
