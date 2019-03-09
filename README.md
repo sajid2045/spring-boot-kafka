@@ -1,3 +1,43 @@
+curl -X POST -F 'message=test' http://localhost:9000/kafka/publish
+
+
+Important Docs:
+
+```    
+https://medium.com/@danieljameskay/understanding-the-enable-auto-commit-kafka-consumer-property-12fa0ade7b65
+
+Lookup: org.apache.kafka.clients.consumer.ConsumerConfig 
+
+/**
+     * <code>session.timeout.ms</code>
+     */
+    public static final String SESSION_TIMEOUT_MS_CONFIG = "session.timeout.ms";
+    private static final String SESSION_TIMEOUT_MS_DOC = "The timeout used to detect consumer failures when using " +
+            "Kafka's group management facility. The consumer sends periodic heartbeats to indicate its liveness " +
+            "to the broker. If no heartbeats are received by the broker before the expiration of this session timeout, " +
+            "then the broker will remove this consumer from the group and initiate a rebalance. Note that the value " +
+            "must be in the allowable range as configured in the broker configuration by <code>group.min.session.timeout.ms</code> " +
+            "and <code>group.max.session.timeout.ms</code>.";
+
+
+    public static final String HEARTBEAT_INTERVAL_MS_CONFIG = "heartbeat.interval.ms";
+    private static final String HEARTBEAT_INTERVAL_MS_DOC = "The expected time between heartbeats to the consumer " +
+            "coordinator when using Kafka's group management facilities. Heartbeats are used to ensure that the " +
+            "consumer's session stays active and to facilitate rebalancing when new consumers join or leave the group. " +
+            "The value must be set lower than <code>session.timeout.ms</code>, but typically should be set no higher " +
+            "than 1/3 of that value. It can be adjusted even lower to control the expected time for normal rebalances.";
+
+
+    # we would rather have duplicate than missing message
+    public static final String AUTO_OFFSET_RESET_CONFIG = "auto.offset.reset";
+    public static final String AUTO_OFFSET_RESET_DOC = "What to do when there is no initial offset in Kafka or if the current offset does not exist any more on the server (e.g. because that data has been deleted): <ul><li>earliest: automatically reset the offset to the earliest offset<li>latest: automatically reset the offset to the latest offset</li><li>none: throw exception to the consumer if no previous offset is found for the consumer's group</li><li>anything else: throw exception to the consumer.</li></ul>";
+
+
+```
+
+
+
+
 All Kafka props
 # APACHE KAFKA (KafkaProperties)
 

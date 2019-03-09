@@ -1,5 +1,6 @@
 package com.demo.controllers;
 
+import com.demo.SpringBootWithKafkaApplication;
 import com.demo.engine.Producer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/kafka")
 public class KafkaController {
-
     private final Producer producer;
 
     @Autowired
@@ -18,8 +18,13 @@ public class KafkaController {
         this.producer = producer;
     }
 
-    @PostMapping(value = "/publish")
-    public void sendMessageToKafkaTopic(@RequestParam("message") String message) {
-        this.producer.sendMessage(message);
+    @PostMapping(value = "/subscription/new")
+    public void newSub(@RequestParam("message") String message) {
+        this.producer.sendMessage(SpringBootWithKafkaApplication.TOPIC_NEW_SUB, message);
+    }
+
+    @PostMapping(value = "/subscription/resubscribe")
+    public void reSub(@RequestParam("message") String message) {
+        this.producer.sendMessage(SpringBootWithKafkaApplication.TOPIC_RE_SUB, message);
     }
 }

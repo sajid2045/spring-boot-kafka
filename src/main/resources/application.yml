@@ -2,13 +2,33 @@ server:
   port: 9000
 spring:
   kafka:
+    properties:
+      ssl.endpoint.identification.algorithm: https
+      security.protocol: 'SASL_SSL'
+      sasl.mechanism: 'PLAIN'
+      retry.backoff.ms: 500
+
+    jaas:
+      enabled: true
+      control-flag: required
+      login-module: org.apache.kafka.common.security.plain.PlainLoginModule
+      options:
+        password: "${CONFLUENT_PASSWORD}"
+        username: "${CONFLUENT_USERNAME}"
+
+    listener:
+      concurrency: 4
+
     consumer:
-      bootstrap-servers: localhost:9092
-      group-id: group_id
+      bootstrap-servers: "${CONFLUENT_ENDPOINT}"
+      group-id: kayo.platform.billingapi.subscriptionHandler
       auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      fetch-max-wait: 100
+      max-poll-records: 5
+      properties:
+        enable.auto.commit: true
+        session.timeout.ms: 120000 #2 mins
+        heartbeat.interval.ms: 30000 # 30 sec (shouldn't be more than 1/3rd of session.timeout.ms
+
     producer:
-      bootstrap-servers: localhost:9092
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      bootstrap-servers: "${CONFLUENT_ENDPOINT}"
