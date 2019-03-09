@@ -1,5 +1,6 @@
-curl -X POST -F 'message=test' http://localhost:9000/kafka/publish
 
+curl -X POST -F "message=t1" http://localhost:9000/kafka/subscription/new
+curl -X POST -F "message=t2" http://localhost:9000/kafka/subscription/resubscribe
 
 Important Docs:
 

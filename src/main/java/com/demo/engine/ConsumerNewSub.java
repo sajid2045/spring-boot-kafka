@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @Service
 public class ConsumerNewSub {
-    private final Logger logger = LoggerFactory.getLogger(Producer.class);
+    private final Logger logger = LoggerFactory.getLogger(ConsumerNewSub.class);
 
     @Autowired
     KafkaListenerContainerFactory kafkaListenerContainerFactory;

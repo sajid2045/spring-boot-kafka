@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @Service
 public class ConsumerReSub {
-    private final Logger logger = LoggerFactory.getLogger(Producer.class);
+    private final Logger logger = LoggerFactory.getLogger(ConsumerReSub.class);
 
     @KafkaListener(topics = SpringBootWithKafkaApplication.TOPIC_RE_SUB, clientIdPrefix = "consumer." + SpringBootWithKafkaApplication.TOPIC_RE_SUB)
     public void reSub(String message) throws IOException {
