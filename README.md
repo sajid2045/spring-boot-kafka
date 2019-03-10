@@ -1,8 +1,39 @@
+##### TRY IT OUT
+
+
+##### 1 Prepare: [ensure you have a env.sh file in your local dir with the kafka creds]
+
+```
+cat env.sh
+export CONFLUENT_PASSWORD='xxx'
+export CONFLUENT_USERNAME='xxx'
+export CONFLUENT_ENDPOINT='xxx.aws.confluent.cloud:9092'
+```
+
+##### 2. Run
+
+`./run.sh `
+
+##### 3. put 29 messages in the queue
+
+```
+./putMessageInBatch.sh 29
+```
+
+
+
+###NOTES:
+
+create some topics: 
+ccloud topic create kayo.platform.billingapi.subscription.test2 --partitions 15
+
 
 curl -X POST -F "message=t1" http://localhost:9000/kafka/subscription/new
 curl -X POST -F "message=t2" http://localhost:9000/kafka/subscription/resubscribe
 
 Important Docs:
+
+
 
 ```    
 https://medium.com/@danieljameskay/understanding-the-enable-auto-commit-kafka-consumer-property-12fa0ade7b65
