@@ -17,18 +17,36 @@ spring:
         username: "${CONFLUENT_USERNAME}"
 
     listener:
-      concurrency: 4
+      concurrency: 5
 
     consumer:
+      enabled: false
       bootstrap-servers: "${CONFLUENT_ENDPOINT}"
       group-id: kayo.platform.billingapi.subscriptionHandler
       auto-offset-reset: earliest
+      enable-auto-commit: false
+      auto-commit-interval: 500
       fetch-max-wait: 100
-      max-poll-records: 5
+      max-poll-records: 1
       properties:
-        enable.auto.commit: true
         session.timeout.ms: 120000 #2 mins
         heartbeat.interval.ms: 30000 # 30 sec (shouldn't be more than 1/3rd of session.timeout.ms
 
     producer:
       bootstrap-servers: "${CONFLUENT_ENDPOINT}"
+
+logging:
+  pattern:
+    console: '%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %msg%n'
+  level:
+    root: INFO
+    com.demo: TRACE
+    org.apache.kafka.clients:
+      consumer.ConsumerConfig: INFO
+    org.springframework:
+      kafka: INFO
+      kafka.listener.ConcurrentMessageListenerContainer: DEBUG
+      kafka.listener.KafkaMessageListenerContainer: DEBUG
+      web: ERROR
+    com.howtodoinjava: DEBUG
+    org.hibernate: ERROR

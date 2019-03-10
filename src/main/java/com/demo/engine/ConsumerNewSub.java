@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
+import org.springframework.kafka.listener.ListenerExecutionFailedException;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
 
@@ -19,15 +20,37 @@ public class ConsumerNewSub {
     @Autowired
     KafkaListenerContainerFactory kafkaListenerContainerFactory;
 
+    /**
+     * AUTO ACK
+     * @param message
+     * @throws IOException
+     */
     @KafkaListener(topics = SpringBootWithKafkaApplication.TOPIC_NEW_SUB, clientIdPrefix="consumer."+SpringBootWithKafkaApplication.TOPIC_NEW_SUB)
     public void newSub(String message) throws IOException {
 
         logger.info(String.format( ">>>> NEW SUB: %s", message));
-//        logger.info(String.format( ">>>> NEW SUB: %s", kafkaListenerContainerFactory.getClass()));
+        logger.info(String.format( ">>>> NEW SUB: %s", kafkaListenerContainerFactory.getClass()));
         sleep();
+
+        if(message.equalsIgnoreCase("3")) {
+            throw new ListenerExecutionFailedException("PROCESSING OF MESSAGE FAILED! Hopefully someone will pickitup : " + message);
+        }
+
         logger.info("<<<< Processing Finished for : " + message);
 
     }
+
+
+//    @KafkaListener(topics = SpringBootWithKafkaApplication.TOPIC_NEW_SUB, clientIdPrefix="consumer."+SpringBootWithKafkaApplication.TOPIC_NEW_SUB)
+//    public void newSub(String message) throws IOException {
+//
+//        logger.info(String.format( ">>>> NEW SUB: %s", message));
+//        logger.info(String.format( ">>>> NEW SUB: %s", kafkaListenerContainerFactory.getClass()));
+//        sleep();
+//        logger.info("<<<< Processing Finished for : " + message);
+//
+//    }
+
 
     private void sleep() {
         try {
